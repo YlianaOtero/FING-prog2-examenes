@@ -32,6 +32,31 @@ void eliminarTabla(Tabla T);
 /*b) Implemente la función Tabla composicionRestringida (Tabla t1, Tabla t2, int min, int max)  que, dadas dos tablas 
 t1 y t2 (de tipo Tabla) y dados dos enteros min y max (con min < max), retorne una tabla t3 que represente la composición 
 de las funciones parciales representadas por t1 y t2, con valores en el dominio de t1 exclusivamente en el rango [min, max]. 
-Esto es, para cada valor entero d en t1, tal que min  d  max, t3(d) debería ser t2(t1(d)). En caso que t2 no esté definida
+Esto es, para cada valor entero d en t1, tal que min <= d <= max, t3(d) debería ser t2(t1(d)). En caso que t2 no esté definida
 para t1(d), d no debería aparecer en el dominio de t3. Implemente la función composicionRestringida considerado la especificación 
 (y no una implementación) del TAD Tabla.*/
+
+Tabla composicionRestringida (Tabla t1, Tabla t2, int min, int max) {
+    Tabla t3 = crearTabla();
+
+    for (int d = min; d <= max; d++) {
+        Rango imagenT1 = obtenerImagen(t1, d);
+
+        if (tieneImagen(t2, imagenT1)) {
+            Rango imagenT2 = obtenerImagen(t2, imagenT1);
+            agregarCorrespondencia(t3, d, imagenT2);
+        }
+    }
+
+    return t3;
+};
+
+struct TablaNodo {
+    Rango * img;
+    TablaNodo * sig;
+};
+
+Tabla crearTabla() {
+    Tabla t = new TablaNodo;
+    return t;
+};
