@@ -1,3 +1,4 @@
+#include <stdio.h>
 /*a) Especifique el TAD Tabla (mapping, función parcial) no acotada con dominio y rango de tipo int. Considere
 operaciones para: 1) crear una tabla vacía, 2) agregar una correspondencia, 3) consultar la cantidad de
 correspondencias, 4) saber si un valor del dominio tiene imagen, 5) obtener la imagen de un valor del
@@ -53,10 +54,14 @@ Tabla composicionRestringida (Tabla t1, Tabla t2, int min, int max) {
 
 struct TablaNodo {
     Rango * img;
+    int tamHash;
+    int M;
     TablaNodo * sig;
 };
 
 Tabla crearTabla() {
     Tabla t = new TablaNodo;
+    t->tamHash = 1019;
+    t->M = 100;
     return t;
 };
