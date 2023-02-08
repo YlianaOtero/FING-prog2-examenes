@@ -12,54 +12,73 @@ struct nodoABEnt
 };
 typedef nodoABEnt *ABEnt;
 
-// TAD Pila
-typedef int * Pila;
-struct Pila;
+// TAD Cola
+typedef ABEnt *Cola;
+struct Cola;
 
-// POS: Crea una pila vacía.
-Pila crearPila();
+// POS: Crea una cola vacía.
+Cola crearCola();
 
-// POS: Destruye una pila y elimina la memoria asociada a ella.
-void destruirPila(Pila p);
+// POS: Destruye una cola y elimina la memoria asociada a ella.
+void destruirCola(Cola c);
 
-// POS: Devuelve true si elem pertenece a p, y false en caso contrario.
-bool pertenece(Pila p, int elem);
+// POS: Devuelve true si elem pertenece a c, y false en caso contrario.
+bool pertenece(Cola c, ABEnt elem);
 
-// POS: Devuelve true si p es vacía, y false en caso contrario.
-bool esVacia(Pila p);
+// POS: Devuelve true si c es vacía, y false en caso contrario.
+bool esVacia(Cola c);
 
-// POS: "Apila" un elemento a la pila, es decir, lo agrega al principio de esta.
-void apilar(Pila p, int elem);
+// POS: "Encola" un elemento a la cola, es decir, lo agrega al final de esta.
+void encolar(Cola c, ABEnt elem);
 
-// PRE: pertenece(p, elem);
-// POS: "Desapila" el elemento de arriba del todo de la pila, es decir, lo elimina de esta. Además, lo devuelve.
-int desapilar(Pila p);
+// PRE: pertenece(c, elem);
+// POS: "Desencola" el elemento del incio de la cola, es decir, lo elimina de esta. Además, lo devuelve.
+ABEnt desencolar(Cola c);
 
-// POS: Devuelve una copia de la pila p. Esta copia no comparte memoria con la pila original.
-Pila copia(Pila p);
+// PRE: !esVacia(c);
+// POS: Devuelve el elemento del incio de la cola.
+ABEnt frente(Cola c);
 
-int sumasNivelesAux(Pila &p, ABEnt a, int suma) {
-    if (a != NULL) {
-        int sumaAux = suma + a->dato;
-        apilar(p, sumaAux);
+// POS: Devuelve una copia de la cola c. Esta copia no comparte memoria con la cola original.
+Cola copia(Cola c);
 
-        return suma;
-    } else {
-        return 0;
-    }
-};
+void sumasNiveles(ABEnt a)
+{
+    if (a != NULL)
+    {
+        Cola c = crearCola();
+        encolar(c, a);
+        encolar(c, NULL);
+        int suma = 0;
 
-void sumasNiveles(ABEnt a) {
-    if (a != NULL) {
-        Pila p = crearPila();
+        while (frente(c) != NULL)
+        {
 
-        while (!esVacia(p)) {
-            int elem = desapilar(p);
-            printf(elem, " ");
+            if (frente(c) != NULL)
+            {
+                ABEnt actual = desencolar(c);
+                suma += actual->dato;
+
+                if (actual->der != NULL)
+                {
+                    encolar(c, actual->der);
+                }
+
+                if (actual->izq != NULL)
+                {
+                    encolar(c, actual->izq);
+                }
+            }
+            else
+            {
+                printf(suma);
+                suma = 0;
+
+                if (!esVacia(c))
+                {
+                    encolar(c, NULL);
+                }
+            }
         }
-
-
-    } else {
-        printf(0);
     }
 };
