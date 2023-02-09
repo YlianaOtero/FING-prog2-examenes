@@ -71,7 +71,7 @@ void sumasNiveles(ABEnt a)
             }
             else
             {
-                printf(suma);
+                printf(%d, suma);
                 suma = 0;
 
                 if (!esVacia(c))
