@@ -10,7 +10,7 @@ Lista crear ( ) ;
 bool esVacia ( Lista l ) ;
 
 /*Devuelve la lista resultado de insertar 'a' al inicio de 'l' .*/
-Lista insertar ( i n t a , Lista l ) ;
+Lista insertar ( int a , Lista l ) ;
 
 /*Devuelve el primer elemento de 'l'.
 Pre: !esVacia (l) .*/
@@ -21,8 +21,7 @@ Pre : ! esVacia (l) .*/
 Lista siguiente ( Lista l ) ;
 
 /* Devuelve 'true' si y solo si 'a' es un elemento de 'l'.*/
-bool pertenece ( i n t a , Lista l ) ;
-
+bool pertenece ( int a , Lista l ) ;
 
 /* Devuelve la cantidad de elementos de 'l'.*/
 int longitud ( Lista l ) ;
@@ -64,3 +63,31 @@ bool sinRepetidos (Lista l) {
 
     return !hayRepetidos;
 };
+
+/*(b) No hay restricción al valor que pueden tomar los enteros y cualquiera de ellos tiene la misma probabilidad de pertenecer a la lista. 
+Implemente la función sinRepetidos con un tiempo de ejecución O(n) promedio.*/
+bool sinRepetidos (Lista l) {
+    bool hayRepetidos = false;
+
+    if (!esVacia(l)) {
+        Lista aux = l;
+        int longitud = longitud(l);
+
+        Lista * hash = new Lista[longitud];
+        for (int i = 0; i < longitud; i++) {
+            hash[i] = crearLista();
+        };
+
+        while (!esVacia(aux) && !hayRepetidos) {
+            int actual = primero(aux);
+            aux = siguiente(aux);
+
+            int pos = actual % longitud;
+            hash[pos] = insertar(actual, hash[pos]);
+
+            hayRepetidos = pertenece(actual, hash[pos]);
+        }
+    }
+
+    return !hayRepetidos;
+}
