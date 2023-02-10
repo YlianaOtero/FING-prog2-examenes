@@ -15,7 +15,7 @@ struct repT
 typedef struct repT *Tree;
 
 /* Rota los subárboles de cada nodo de T y devuelve el resultado de la transformación.*/
-Tree rotar(Tree T);
+//Tree rotar(Tree T);
 
 /* (a) Implemente una función iterativa que aplica la rotación descrita solo al nodo pasado por parámetro (no
 a sus subárboles). */
@@ -44,6 +44,16 @@ Tree moverPrimero(repT *T) {
 
     return T;
 };
+
+Tree rotar(Tree T) {
+    if (T != NULL) {
+        T = moverPrimero(T);
+        T->ph = rotar(T->ph);
+        T->sh = rotar(T->sh);
+    }
+
+    return T;
+}
 
 Tree crearArbol(int info)
 {
