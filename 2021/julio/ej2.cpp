@@ -97,3 +97,16 @@ void encolar(int x, ColaInt &cola) {
         cola->ultimo = nuevo;
     }
 }
+
+/*d)Indique el orden de tiempo de ejecución para el peor caso y el caso promedio de la función camino (de la 
+parte b), considerando la implementación previa del TAD ColaInt. Justifique.*/
+
+/*En el peor caso, el arbol t no es vacio, pero el elemento x no pertenece al arbol. En esta situacion, la funcion
+caminoAux recorre el arbol en O(n) (n es la cantidad de elementos del arbol), encolando los elementos, y luego al 
+llegar al final del arbol, losdesencola todos en un while porque nunca encontro al dato x (O(n) otra vez). Por lo 
+tanto, es O(n) en el peor caso.
+
+En el caso promedio, recorrer un ABB buscando a un elemento es O(log2(n)). 
+
+No sumo el tiempo de ejecucion para las operaciones de encolar, desencolar o crearCola porque son todas de O(1) para
+la implementacion escogida.*/
