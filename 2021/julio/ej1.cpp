@@ -15,6 +15,7 @@ padre deberá retornar el puntero NULL. No se pueden definir operaciones auxilia
 AG padre(AG a, int x)
 {
     AG nodoPadre = NULL;
+    bool encontrado = false;
 
     if (a != NULL && a->dato != x)
     {
@@ -26,13 +27,26 @@ AG padre(AG a, int x)
             }
             else
             {
-                if (a->pH->sH != NULL && a->pH->sH->dato == x)
+                AG ph = a->pH;
+                encontrado = ph->dato == x;
+
+                while (!encontrado && ph->sH != NULL)
+                {
+                    ph = ph->sH;
+                    encontrado = ph->dato == x;
+                }
+
+                if (encontrado)
                 {
                     nodoPadre = a;
                 }
-                else if (a->pH->sH != NULL)
+                else
                 {
-                    nodoPadre = padre(a->sH, x);
+                    nodoPadre = padre(a->pH, x);
+                    if (nodoPadre == NULL)
+                    {
+                        nodoPadre = padre(a->sH, x);
+                    }
                 }
             };
         }
