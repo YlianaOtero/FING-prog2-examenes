@@ -11,14 +11,14 @@ typedef rep_Cola * ColaInt;
 ColaInt crearCola();
 
 //POS: Devuelve true si la cola esta vacia, y false en caso contrario.
-bool esVacia(ColaInt c);
+bool esVacia(ColaInt cola);
 
 //POS: Inserta un elemento al final de la cola.
-void encolar(int elem, ColaInt cola);
+void encolar(int elem, ColaInt &cola);
 
 //PRE: !esVacia(cola);
 //POS: Elimina el primer elemento de la cola.
-void desencolar(ColaInt cola);
+void desencolar(ColaInt &cola);
 
 //PRE: !esVacia(cola);
 //POS: Devuelve el primer elemento de la cola.
@@ -58,4 +58,42 @@ ColaInt camino (ABB t, int x) {
     }
 
     return cola;
+}
+
+/*c)Sugiera una implementación eficiente del TAD ColaInt, definiendo la representación del TAD e 
+implementando solamente sus operaciones constructoras; asuma que el resto de las operaciones del TAD 
+están implementadas eficientemente.*/
+
+/*Usamos una lista simplemente encadenada, con un cabezal con punteros al primero y ultimo nodo.*/
+struct nodo {
+    int dato;
+    nodo * sig;
+};
+
+struct rep_Cola {
+    nodo * primero;
+    nodo * ultimo;
+};
+
+
+ColaInt crearCola() {
+    ColaInt nueva = new rep_Cola;
+    nueva->primero = NULL;
+    nueva->ultimo = NULL;
+
+    return nueva;
+};
+
+void encolar(int x, ColaInt &cola) {
+    nodo * nuevo = new nodo;
+    nuevo->dato = x;
+    nuevo->sig = NULL;
+
+    if (esVacia(cola)) {
+        cola->primero = nuevo;
+        cola->ultimo = nuevo;
+    } else {
+        cola->ultimo->sig = nuevo;
+        cola->ultimo = nuevo;
+    }
 }
