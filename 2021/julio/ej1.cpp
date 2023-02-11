@@ -19,38 +19,34 @@ AG padre(AG a, int x)
 
     if (a != NULL && a->dato != x)
     {
-        if (a->pH != NULL)
+        AG ph = a->pH;
+        
+        if (ph != NULL && ph->dato == x)
         {
-            if (a->pH->dato == x)
-            {
-                nodoPadre = a;
-            }
-            else
-            {
-                AG ph = a->pH;
-                encontrado = ph->dato == x;
-
-                while (!encontrado && ph->sH != NULL)
-                {
-                    ph = ph->sH;
-                    encontrado = ph->dato == x;
-                }
-
-                if (encontrado)
-                {
-                    nodoPadre = a;
-                }
-                else
-                {
-                    nodoPadre = padre(a->pH, x);
-                    if (nodoPadre == NULL)
-                    {
-                        nodoPadre = padre(a->sH, x);
-                    }
-                }
-            };
+            nodoPadre = a;
         }
-    }
+
+        encontrado = ph->dato == x;
+
+        while (!encontrado && ph->sH != NULL)
+        {
+            ph = ph->sH;
+            encontrado = ph->dato == x;
+        }
+
+        if (encontrado)
+        {
+            nodoPadre = a;
+        }
+        else
+        {
+            nodoPadre = padre(a->pH, x);
+            if (nodoPadre == NULL)
+            {
+                nodoPadre = padre(a->sH, x);
+            }
+        }
+    };
 
     return nodoPadre;
 }
