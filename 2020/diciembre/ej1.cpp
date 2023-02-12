@@ -2,13 +2,13 @@
 
 /*a) Implemente un procedimiento iterativo insFinal que dados una lista de enteros l y un entero e,
 agregue a e al final de l. Si la lista es vacía, lo insertará como único elemento de ésta.*/
-
-typedef nodo *Lista;
 struct nodo
 {
     int dato;
-    Lista sig;
+    nodo *sig;
 };
+
+typedef nodo *Lista;
 
 void insFinal(Lista &l, int e)
 {
@@ -59,28 +59,64 @@ copiaEficiente para construir la copia de una lista, sin compartir memoria, en u
 tiempo de ejecución en el peor caso que la función copia. Calcule el orden del peor caso y justifique
 brevemente.*/
 
-Lista copiaEficiente (Lista l) {
+Lista copiaEficiente(Lista l)
+{
     Lista resultado = NULL;
-    
-    if (l != NULL) {
-        nodo * nuevo = new nodo;
+
+    if (l != NULL)
+    {
+        nodo *nuevo = new nodo;
         nuevo->dato = l->dato;
         nuevo->sig = NULL;
 
         resultado = nuevo;
-        
-        Lista auxRes = NULL;
+
+        Lista auxRes = resultado;
         resultado->sig = auxRes;
 
-        while (l->sig != NULL) {
-            nodo * nuevo = new nodo;
+        while (l->sig != NULL)
+        {
+            nodo *nuevo = new nodo;
             nuevo->dato = l->sig->dato;
-            auxRes = nuevo;
+            auxRes->sig = nuevo;
             l = l->sig;
             auxRes = auxRes->sig;
         }
-
     }
 
     return resultado;
 };
+
+/*PRUEBAS*/
+int main()
+{
+    Lista nueva = new nodo;
+    nueva = NULL;
+
+    for (int i = 0; i < 10; i++)
+    {
+        insFinal(nueva, i);
+    };
+
+    Lista aux = nueva;
+    printf("LISTA ORIGINAL: \n");
+
+    while (aux != NULL)
+    {
+        printf("%d", aux->dato);
+        printf("\n");
+        aux = aux->sig;
+    };
+
+    Lista copiaRapida = copiaEficiente(nueva);
+
+    printf("COPIA EFICIENTE: \n");
+
+    while (copiaRapida != NULL)
+    {
+        printf("%d", copiaRapida->dato);
+        printf("\n");
+        copiaRapida = copiaRapida->sig;
+    };
+
+}
