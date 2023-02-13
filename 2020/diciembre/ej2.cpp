@@ -38,8 +38,9 @@ struct nodo {
 typedef nodo * ABB;
 
 struct RepMultiset {
-    int K;
     ABB abb;
+    int min;
+    int cant;
 };
 
 Multiset crear(){
@@ -47,13 +48,45 @@ Multiset crear(){
     ABB arbol = new nodo;
     arbol = NULL;
 
-    nuevo->K = K;
+    nuevo->cant = 0;
     nuevo->abb = arbol;
 
     return nuevo;
 };
 
-void insertar (Multiset & m, int x, int n) {
+void insAbb(ABB &t, int x, int n) {
+    if (n > 0) {
+        if (t == NULL) {
+            ABB nodoNuevo = new nodo;
+            nodoNuevo->dato = x;
+            nodoNuevo->izq = NULL;
+            nodoNuevo->der = NULL;
+            insAbb(nodoNuevo->izq, x, n-1);
+            insAbb(nodoNuevo->der, x, n-2);
+        }
+    } else {
+        if (t->dato < x) {
+            insAbb(t->der, x, n);
+        } else {
+            insAbb(t->izq, x, n);
+        }
+    }
+}
 
+void insertar (Multiset & m, int x, int n) {
+    if (m->abb == NULL) {
+        m->min = x;
+    } else {
+        if (m->min > x) {
+            m->min = x;
+        }
+    }
+
+    insAbb(t, x, n);
+    m->cant += n;
 };
 
+
+int min (Multiset m) {
+    return m->min;
+};
