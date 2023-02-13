@@ -82,7 +82,7 @@ void insertar (Multiset & m, int x, int n) {
         }
     }
 
-    insAbb(t, x, n);
+    insAbb(m->abb, x, n);
     m->cant += n;
 };
 
