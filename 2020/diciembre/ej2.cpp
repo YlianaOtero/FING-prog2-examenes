@@ -7,15 +7,20 @@ typedef RepMultiset * Multiset;
 
 // POS: Devuelve el multiset vacío.
 Multiset crear();
+
 // POS: Agrega n ocurrencias del elemento x al multiset m. PRE: n>0, 1<=x<=K.
 void insertar (Multiset & m, int x, int n);
+
 // POS: Devuelve la suma total de ocurrencias de todos los elementos del multiset m (0 si m está vacío).
 int cantidad (Multiset m);
+
 // POS: Devuelve la cantidad de ocurrencias del elemento x del multiset m (0 si x no está en m).
 int ocurrencias (Multiset m, int x);
+
 /* POS: Elimina a lo sumo n ocurrencia del elemento x del multiset m. Si ocurrencias(m, x)<=n entonces
 en m no quedarán ocurrencias del elemento x. */
 void eliminar (Multiset & m, int x, int n);
+
 // POS: Devuelve el mínimo elemento del multiset m (independientemente del número de ocurrencias).
 // PRE: m no vacío.
 int min (Multiset m);
@@ -33,6 +38,7 @@ struct nodo {
     int dato;
     nodo * izq;
     nodo * der;
+    int cant;
 };
 
 typedef nodo * ABB;
@@ -45,8 +51,7 @@ struct RepMultiset {
 
 Multiset crear(){
     Multiset nuevo = new RepMultiset;
-    ABB arbol = new nodo;
-    arbol = NULL;
+    ABB arbol = NULL;
 
     nuevo->cant = 0;
     nuevo->abb = arbol;
@@ -55,32 +60,27 @@ Multiset crear(){
 };
 
 void insAbb(ABB &t, int x, int n) {
-    if (n > 0) {
-        if (t == NULL) {
-            ABB nodoNuevo = new nodo;
-            nodoNuevo->dato = x;
-            nodoNuevo->izq = NULL;
-            nodoNuevo->der = NULL;
-            insAbb(nodoNuevo->izq, x, n-1);
-            insAbb(nodoNuevo->der, x, n-2);
-        }
+    if (t == NULL) {
+        ABB nodoNuevo = new nodo;
+        nodoNuevo->dato = x;
+        nodoNuevo->izq = NULL;
+        nodoNuevo->der = NULL;
+        nodoNuevo->cant = n;
     } else {
         if (t->dato < x) {
             insAbb(t->der, x, n);
-        } else {
+        } else if (t->dato > x) {
             insAbb(t->izq, x, n);
+        } else {
+            t->cant += n;
         }
     }
 }
 
 void insertar (Multiset & m, int x, int n) {
-    if (m->abb == NULL) {
+    if (m->abb == NULL || m->min > x) {
         m->min = x;
-    } else {
-        if (m->min > x) {
-            m->min = x;
-        }
-    }
+    } 
 
     insAbb(m->abb, x, n);
     m->cant += n;
@@ -89,4 +89,20 @@ void insertar (Multiset & m, int x, int n) {
 
 int min (Multiset m) {
     return m->min;
+};
+
+/*b) Implemente el procedimiento vaciar que dado un multiset m, según la especificación dada
+previamente, elimine todos sus elementos, dejando a éste vacío. El procedimiento vaciar no debería
+acceder a la representación del TAD ni dejar memoria colgada (sin liberar).*/
+
+void vaciar (Multiset & m) {
+    int cantTotal = cantidad(m);
+    int minimo = min(m);
+
+    if (cantTotal > 0) {
+        eliminar(m, minimo, cantTotal);
+        vaciar(m);
+    } else {
+        delete m;
+    }
 };
