@@ -14,30 +14,6 @@ struct nodo
     Lista sig;
 };
 
-Lista copia(Lista l) {
-    Lista nueva = NULL;
-
-    if (l != NULL) {
-        Lista nuevoNodo = new nodo;
-        nuevoNodo->dato = l->dato;
-        nueva = nuevoNodo;
-        nueva->sig = NULL;
-        nueva = nueva->sig;
-        l = l->sig;
-
-        while (l != NULL) {
-            nuevoNodo = new nodo;
-            nuevoNodo->dato = l->dato;
-            nueva = nuevoNodo;
-            nueva->sig = NULL;
-            nueva = nueva->sig;
-            l = l->sig;
-        }
-    }
-
-    return nueva;
-}
-
 Lista comunes(Lista l1, Lista l2)
 {
     Lista resultado = NULL;
@@ -48,7 +24,6 @@ Lista comunes(Lista l1, Lista l2)
             Lista nuevoNodo = new nodo;
             nuevoNodo->dato = l1->dato;
             resultado = nuevoNodo;
-            
 
             if (aux == NULL) {
                 resultado->sig = NULL;
@@ -56,13 +31,72 @@ Lista comunes(Lista l1, Lista l2)
                 aux = resultado;
                 resultado->sig = nuevoNodo;
             }
-
-            
-
-            
-            
+        } else if (l1->dato > l2->dato) {
+            l2 = l2->sig;
+        } else {
+            l1 = l1->sig;
         }
     };
 
+    
+
     return resultado;
+}
+
+
+/*PRUEBAS*/
+
+void insFinal(Lista &l, int e)
+{
+    nodo *nuevo = new nodo;
+    nuevo->dato = e;
+    nuevo->sig = NULL;
+
+    if (l != NULL)
+    {
+        Lista aux = l;
+        while (aux->sig != NULL)
+        {
+            aux = aux->sig;
+        };
+
+        aux->sig = nuevo;
+    }
+    else
+    {
+        l = nuevo;
+    }
+};
+
+int main()
+{
+    Lista nueva = new nodo;
+    nueva = NULL;
+
+    for (int i = 0; i < 10; i++)
+    {
+        insFinal(nueva, i);
+    };
+
+    Lista aux = nueva;
+    printf("LISTA ORIGINAL: \n");
+
+    while (aux != NULL)
+    {
+        printf("%d", aux->dato);
+        printf("\n");
+        aux = aux->sig;
+    };
+
+    Lista copiaRapida = copiaEficiente(nueva);
+
+    printf("COPIA EFICIENTE: \n");
+
+    while (copiaRapida != NULL)
+    {
+        printf("%d", copiaRapida->dato);
+        printf("\n");
+        copiaRapida = copiaRapida->sig;
+    };
+
 }
