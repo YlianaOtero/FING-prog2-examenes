@@ -19,6 +19,7 @@ Lista comunes(Lista l1, Lista l2)
     Lista resultado = NULL;
     Lista aux = resultado;
 
+
     while (l1 != NULL && l2 != NULL) {
         if (l1->dato == l2->dato) {
             Lista nuevoNodo = new nodo;
@@ -36,9 +37,11 @@ Lista comunes(Lista l1, Lista l2)
         } else {
             l1 = l1->sig;
         }
+
+        if (l1->sig == NULL)
     };
 
-    
+
 
     return resultado;
 }
