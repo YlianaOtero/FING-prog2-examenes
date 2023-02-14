@@ -40,10 +40,28 @@ Lista copia(Lista l) {
 
 Lista comunes(Lista l1, Lista l2)
 {
-    Lista resultado;
+    Lista resultado = NULL;
+    Lista aux = resultado;
 
-    if (l1 == NULL) {
+    while (l1 != NULL && l2 != NULL) {
+        if (l1->dato == l2->dato) {
+            Lista nuevoNodo = new nodo;
+            nuevoNodo->dato = l1->dato;
+            resultado = nuevoNodo;
+            
 
+            if (aux == NULL) {
+                resultado->sig = NULL;
+            } else {
+                aux = resultado;
+                resultado->sig = nuevoNodo;
+            }
+
+            
+
+            
+            
+        }
     };
 
     return resultado;
