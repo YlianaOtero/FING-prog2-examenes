@@ -17,89 +17,25 @@ struct nodo
 Lista comunes(Lista l1, Lista l2)
 {
     Lista resultado = NULL;
-    Lista aux = resultado;
-
 
     while (l1 != NULL && l2 != NULL) {
         if (l1->dato == l2->dato) {
             Lista nuevoNodo = new nodo;
             nuevoNodo->dato = l1->dato;
+            nuevoNodo->sig = resultado;
             resultado = nuevoNodo;
-
-            if (aux == NULL) {
-                resultado->sig = NULL;
-            } else {
-                aux = resultado;
-                resultado->sig = nuevoNodo;
-            }
+            
         } else if (l1->dato > l2->dato) {
             l2 = l2->sig;
         } else {
             l1 = l1->sig;
         }
-
-        if (l1->sig == NULL)
     };
-
-
 
     return resultado;
 }
 
-
-/*PRUEBAS*/
-
-void insFinal(Lista &l, int e)
-{
-    nodo *nuevo = new nodo;
-    nuevo->dato = e;
-    nuevo->sig = NULL;
-
-    if (l != NULL)
-    {
-        Lista aux = l;
-        while (aux->sig != NULL)
-        {
-            aux = aux->sig;
-        };
-
-        aux->sig = nuevo;
-    }
-    else
-    {
-        l = nuevo;
-    }
-};
-
-int main()
-{
-    Lista nueva = new nodo;
-    nueva = NULL;
-
-    for (int i = 0; i < 10; i++)
-    {
-        insFinal(nueva, i);
-    };
-
-    Lista aux = nueva;
-    printf("LISTA ORIGINAL: \n");
-
-    while (aux != NULL)
-    {
-        printf("%d", aux->dato);
-        printf("\n");
-        aux = aux->sig;
-    };
-
-    Lista copiaRapida = copiaEficiente(nueva);
-
-    printf("COPIA EFICIENTE: \n");
-
-    while (copiaRapida != NULL)
-    {
-        printf("%d", copiaRapida->dato);
-        printf("\n");
-        copiaRapida = copiaRapida->sig;
-    };
-
-}
+/*b) Justifique brevemente el cumplimiento del orden del peor caso O(n+m) para la función comunes.*/
+/*En el peor de los casos, la función comunes recorre ambas listas una única vez, pues va recorriendo hasta que una de las dos es vacía, 
+y una vez se llega a esta condición, no vuelve a recorrer nada.  Recorrer l1 es O(n), mientras que recorrer l2 es O(m).
+El resto de las operaciones que hace la función son comparaciones y asignaciones, por lo que no aumentan el orden de ejecución.*/
