@@ -12,5 +12,23 @@ menor o igual que sup (asumimos inf < sup). Implemente consolidar sin acceder a 
 Tabla*/
 
 Tabla consolidar (Tabla t1, Tabla t2, nat inf, nat sup) {
+    Tabla resultado = crear();
 
+    for (int cont = inf; cont <= sup; cont++) {
+        float sueldo1 = 0;
+        float sueldo2 = 0;
+
+        if (definida(cont, t1)) {
+            sueldo1 = recuperar(cont, t1);
+        };
+        if (definida(cont, t2)) {
+            sueldo2 = recuperar(cont, t2);
+        };
+
+        float total = sueldo1 + sueldo2;
+
+        insertar(cont, total, resultado);
+    }
+
+    return resultado;
 }
