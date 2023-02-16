@@ -48,8 +48,39 @@ Tabla crear() {
     Tabla t = new RepTabla;
     t->abb = NULL;
     t->cant = 0;
+
+    return t;
 };
 
+bool insAbb(ABB &abb, nat d, float c) {
+    bool aumentaCant = true;
+
+    if (abb != NULL) {
+        if (abb->d == d) {
+            abb->c = c;
+            aumentaCant = false;
+        } else if (abb->d > d) {
+            insAbb(abb->izq, d, c);
+        } else {
+            insAbb(abb->der, d, c);
+        }
+    } else {
+        ABB nuevo = new Nodo;
+        nuevo->c = c;
+        nuevo->d = d;
+        nuevo->izq = NULL;
+        nuevo->der = NULL;
+    }
+
+    return aumentaCant;
+}
+
 void insertar (nat d, float c, Tabla & t) {
-    if (t)
+    if (insAbb(t->abb, d, c)) {
+        t->cant++;
+    };
+};
+
+int cantidad (Tabla t) {
+    return t->cant;
 };
