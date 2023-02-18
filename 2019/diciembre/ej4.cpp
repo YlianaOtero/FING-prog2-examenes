@@ -1,3 +1,4 @@
+#include <stdio.h>
 /*La empresa de entrega de mercaderías DeliveryYa necesita gestionar su callcenter, al cual se comunican
 sus clientes para hacer los pedidos y que es atendido por una plantilla de operadores de la empresa.
 Cada cliente es identificado por su teléfono (int) y no se sabe cuántos clientes pueden estar en espera en
