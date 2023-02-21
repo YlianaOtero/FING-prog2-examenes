@@ -82,7 +82,7 @@ void encolar(Cola c, int dato) {
 };
 
 void desencolar(Cola c) {
-    nodo_Cola * aBorrar = c->cola;asignacion
+    nodo_Cola * aBorrar = c->cola;
     c->cola = c->cola->sig;
     c->primero = c->cola;
     c->cant--;
